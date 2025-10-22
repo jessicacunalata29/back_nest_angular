@@ -4,22 +4,21 @@ import { parse } from 'dotenv';
 
 @Injectable()
 export class ConfigService {
-  private readonly envconfig: { [key: string]: string };
+  private readonly envConfig: { [key: string]: string };
 
   constructor() {
     const env = process.env.NODE_ENV || 'development';
-    const envFilePath = `${__dirname}/../../../.env.${env}`;
-    const existsPath = fs.existsSync(envFilePath);
-
+    const envFilePath = `${__dirname}/../../../.env.${env}`; 
+    const existsPath = fs.existsSync(envFilePath)
     if (!existsPath) {
-      console.log(`El archivo .env.${env} no existe`);
-      process.exit(1); // salir con código de error
+      console.error(`${envFilePath} no existe`);
+      process.exit(1);
     }
 
-    this.envconfig = parse(fs.readFileSync(envFilePath, { encoding: 'utf8' }));
+    this.envConfig = parse(fs.readFileSync(envFilePath));
   }
 
-  get(key: string): string | undefined {
-    return this.envconfig[key];
+  get(key: string): string {
+    return this.envConfig[key];
   }
 }
