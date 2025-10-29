@@ -1,23 +1,24 @@
-import {config} from "dotenv";
+// src/data-source.ts
+import { config } from "dotenv";
 import { DataSource } from "typeorm";
 
-const env= process.env.NODE_ENV  || 'development'
-
+// Cargar variables de entorno
 config({
-    override: true,
-    path: `.env.${env}`,
-    debug:true
-})
-
-export default new DataSource({
-    type: 'postgres',
-    host: process.env.HOST,
-    port: +process.env.PORT!,
-    username: process.env.USERNAME,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
-    entities: ['src/**/*.entity.ts'],
-    migrations: ['src/database/migrations/*.ts']
+  path: '.env.development', // asegúrate que este archivo exista
+  override: true,
+  debug: true,
+});
 
 
+export const AppDataSource = new DataSource({
+  type: 'postgres',
+  host: process.env.HOST,             // localhost
+  port: +process.env.PORT_DB!,        // 5432
+  username: process.env.USERNAME,     // postgres
+  password: process.env.PASSWORD,     // 1234
+  database: process.env.DATABASE,     // backend_jessicacunalata
+  entities: ['src/**/*.entity{.ts,.js}'],    // todas las entidades
+  migrations: ['src/database/migrations/*{.ts,.js}'],
+  synchronize: false,                 // mejor false en producción
+  logging: true,
 });
