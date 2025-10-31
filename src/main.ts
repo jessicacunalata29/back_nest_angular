@@ -1,3 +1,6 @@
+import { config } from 'dotenv';
+config({ path: '.env.development' }); // 👈 esto carga tus variables
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
@@ -7,14 +10,16 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
 
-   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+  const config = new DocumentBuilder()
+    .setTitle('Backend Jessica Cunalata')
+    .setDescription('API con NestJS y PostgreSQL')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('productos')
     .build();
+
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
-  await app.listen( 3000);
+
+  await app.listen(3000);
 }
 bootstrap();

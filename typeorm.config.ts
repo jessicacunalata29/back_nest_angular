@@ -1,24 +1,21 @@
-// src/data-source.ts
-import { config } from "dotenv";
-import { DataSource } from "typeorm";
+import { DataSource } from 'typeorm';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+import { Configuration } from './src/config/key';
 
-// Cargar variables de entorno
-config({
-  path: '.env.development', // asegúrate que este archivo exista
-  override: true,
-  debug: true,
-});
 
+const ENV = process.env.NODE_ENV || 'development';
+dotenv.config({ path: path.resolve(__dirname, `.env.${ENV}`) });
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  host: process.env.HOST,             // localhost
-  port: +process.env.PORT_DB!,        // 5432
-  username: process.env.USERNAME,     // postgres
-  password: process.env.PASSWORD,     // 1234
-  database: process.env.DATABASE,     // backend_jessicacunalata
-  entities: ['src/**/*.entity{.ts,.js}'],    // todas las entidades
-  migrations: ['src/database/migrations/*{.ts,.js}'],
-  synchronize: false,                 // mejor false en producción
-  logging: true,
+  host: process.env[Configuration.HOST],
+  port: Number(process.env[Configuration.PORT_DB]),
+  username: process.env[Configuration.USER],
+  password: process.env[Configuration.PASSWORD],
+  database: process.env[Configuration.DATABASE],
+  synchronize: ENV === 'development',
+  logging: ENV === 'development',
+  entities: ['src/**/entities/*.entity.ts'],
+  migrations: ['src/migrations/*.ts'],
 });
