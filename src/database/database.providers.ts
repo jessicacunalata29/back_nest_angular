@@ -1,4 +1,4 @@
-import { ConfigService } from "@nestjs/config";
+import { ConfigService } from 'src/config/config.service';
 import { DataSource } from "typeorm";
 
 export const databaseProviders=[
@@ -12,7 +12,9 @@ export const databaseProviders=[
             port: +config.get("PORT_DB"),
             username: config.get ("USERNAME")|| 'root',
             password: config.get("PASSWORD")|| 'prueba',
-            database: config.get("DATABASE")
+            database: config.get("DATABASE"),
+            entities: [
+                __dirname + '/../**/*.entity{.ts,.js}'],
         });
 
         return dataSource.initialize();
