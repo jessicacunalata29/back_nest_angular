@@ -9,9 +9,12 @@ import { ConfigModule } from './config/config.module';
 import { CategoriaModule } from './modules/categoria/categoria.module';
 import { PersonaModule } from './modules/persona/persona.module';
 import { ProductoModule } from './modules/producto/producto.module';
+import { RolesModule } from './modules/roles/roles.module';
+import { ClienteModule } from './modules/cliente/cliente.module';
+import { PedidoModule } from './modules/pedido/pedido.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, DatabaseModule, ConfigModule, CategoriaModule, PersonaModule, ProductoModule], 
+  imports: [AuthModule, UsersModule, DatabaseModule, ConfigModule, CategoriaModule, PersonaModule, ProductoModule, RolesModule, ClienteModule, PedidoModule], 
   controllers: [AppController],
   providers: [AppService, ConfigService],
 })
