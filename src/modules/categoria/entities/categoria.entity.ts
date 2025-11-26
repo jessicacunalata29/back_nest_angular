@@ -6,10 +6,10 @@ export class Categoria {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({type:'varchar', length:50})
   nombre: string;
 
-  @Column({ nullable: true })   // SOLO UNA VEZ
+  @Column({ type: 'text' })   // SOLO UNA VEZ
   detalle: string;
 
   @Column({ default: true })

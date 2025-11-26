@@ -1,35 +1,33 @@
 import { PedidoProducto } from "../../pedido/entities/pedidoproducto.entity";
 import { Categoria } from "../../categoria/entities/categoria.entity";
-//import {Categoria} from "src/modules/categoria/entities/categoria.entity";
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-import { Column, Entity, ManyToOne, OneToMany,PrimaryGeneratedColumn } from "typeorm";
-@Entity ('productos')
-
+@Entity('productos')
 export class Producto {
     @PrimaryGeneratedColumn()
-    id: number;
+    id:number;
 
-    @Column()
-    nombre: string;
+    @Column({type: 'varchar', length:250})
+    nombre:string;
 
-    @Column()
-    precio: number;
+    @Column({type: 'decimal', precision:10, scale:2})
+    precio:number;
 
-    @Column()
-    stock: number;
+    @Column({type: 'int'})
+    stock:number;
 
-    @Column()
-    imagen: string;
+    @Column({type: 'varchar', length:250, nullable:true})
+    image:string;
 
-    @Column()
-    descripcion: string;
+    @Column({type: 'text', nullable:true})
+    descripcion:string;
 
-    @Column()
-    estado: boolean;
+    @Column({type: 'boolean', default:true})
+    estado:boolean;
 
-    @ManyToOne(() => Categoria ,(cat)=> cat.productos) 
-    categoria: Categoria;
+    @ManyToOne(()=>Categoria, (cat)=>cat.productos)
+    categoria: Categoria
 
-    @OneToMany(() => PedidoProducto, pedprod => pedprod.producto)
+    @ManyToMany(()=>PedidoProducto, predprod => predprod.producto)
     pedidoProducto: PedidoProducto[];
 }
