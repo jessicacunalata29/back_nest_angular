@@ -1,0 +1,19 @@
+###Listar productos
+
+GET  http://127.0.0.1:3000/producto
+
+###Crear producto
+
+POST http://127.0.0.1:3000/producto
+Content-Type: application/json
+
+{
+    "nombre":"teclado",
+    "precio": "345",
+    "stock": 12,
+    "categoriaId": 1
+}
+
+###Busqueda por nombre
+
+GET http://127.0.0.1:3000/producto/back?page=3 
